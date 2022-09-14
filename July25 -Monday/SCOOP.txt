@@ -1,0 +1,83 @@
+To access root user on  Virtual Box:
+->sandbox-hdp login: root
+password:Ramya@123
+
+To access Mysql server on Virtual box:
+mysql -u root -p
+password: hadoop
+
+
+ 
+load data local inpath '/root/insurance.csv' into table insurancedata;
+
+grant all privileges on NewDB. * to root@localhost;
+
+Since it didnot allow delimiter while creating a table, we are using it while loading data into this tabke on mysql
+load data local infile '/root/insurance.csv' into table insurance_data1 fields terminated by ',' ignore 1 rows;
+
+To import data from mysql onto HDFS: ( RUN THIS COMMAND ON ROOT AND NOT ON MYSQL)
+sqoop import --connect jdbc:mysql://localhost:3306/NewDB --driver com.mysql.jdbc.Driver --table insurance_data1 -m1 --username root --password hadoop
+
+sqoop import --connect jdbc:mysql://localhost:3306/mydata --driver com.mysql.jdbc.Driver --table sampledata -m1 --username root --password hadoop
+
+
+WHEN WE CREATE A TABLE ON HIVE, IT IS AUTOMATICALLY SAVED ON HDFS, BUT it there is a table on HDFS it doesnot have to be on HIVE as we might have imported tables from outside onto HDFS and not hive.
+
+To move data from HDFS to HIVE: 
+sqoop import --connect jdbc:mysql://localhost:3306/mydata --driver com.mysql.jdbc.Driver --table insurance_data1 -m1 --username root --password hadoop --hive
+
+
+To export data or may be cleaned data from HDFS back to MYSQL: 
+
+sqoop export --connect jdbc:mysql://localhost:3306/mydata -m1 --driver com.mysql.jdbc.Driver --table sampledata --export --dir=/apps/hive/warehouse/sampledata  --username root --password hadoop
+
+
+To delete a table from mysql:
+
+truncate table table_name;
+
+sqoop export --connect jdbc:mysql://localhost:3306/data --driver com.mysql.jdbc.Driver --table insurance_data1 --export-dir=/apps/hive/warehouse/insurance_data1 --username root --password hadoop;
+
+sqoop export --connect jdbc:mysql://localhost:3306/mydata -m1 --driver com.mysql.jdbc.Driver --table insurance_data1 --export-dir=/apps/hive/warehouse/insurance_data1 --username root --password hadoop;
+
+sqoop export --connect jdbc:mysql://localhost:3306/data --driver com.mysql.jdbc.Driver --table zomato --export-dir=/apps/hive/warehouse/bank_churn_modelling --username root --password hadoop;
+
+
+
+
+sqoop import --connect "jdbc:mysql://database-2.c9dutbh8ufvz.us-east-1.rds.amazonaws.com/AWSDB?autoReconnect=true&useSSL=false" --use
+rname admin -P --table yellow_tripdata -m 1
+
+
+sqoop import --connect 'jdbc:mysql://database-2.c9dutbh8ufvz.us-east-1.rds.amazonaws.com/AWSDB?autoReconnect=true&useSSL=false' table yellow_tripdata -m1 --username admin -P --hive-import --hive-default
+
+
+sqoop import --connect 'jdbc:mysql://database-2.c9dutbh8ufvz.us-east-1.rds.amazonaws.com/AWSDB?autoReconnect=true&useSSL=false' --table yellow_tripdata -m1 --username admin -P --hive-import --hive-database default --hive-table yellow_hive
+
+
+
+TO IMPORT TABLE FROM EXTRENAL RDBMS TO HIVE, RUN THIS COMMAND ON ROOT USER IN VIRTUAL BOX TERMINAL:
+
+THIS COMMAND WORKS: USING SCOOP TO IMPORT TABLE FROM RDBMS TO HIVE , TABLE IS AUTOMATICALLY SAVED TO DEFAULT DATA BASE ON HIVE
+sqoop import --connect 'jdbc:mysql://database-2.c9dutbh8ufvz.us-east-1.rds.amazonaws.com/AWSDB?autoReconnect=true&useSSL=false' --table yellow_tripdata -m1 --username admin -P --hive-import
+
+sqoop import --connect 'jdbc:mysql://localhost:3306/hexware -m1 --driver com.mysql.jdbc.Driver' --table yellowsql -m1 --username admin -P --hive-import
+
+
+
+
+
+To see header in the table that we imported from AWS RDS to hive:
+
+1.set hive.cli.print.header=true;
+
+2.
+su root
+systemctl stop mysqld
+systemctl set-environment MYSQLD_OPTS="--skip-grant-tables --skip-networking"
+systemctl start mysqld
+mysql -uroot
+FLUSH PRIVILEGES;
+alter user 'root'@'localhost' IDENTIFIED BY 'hadoop';
+FLUSH PRIVILEGES;
+QUIT;

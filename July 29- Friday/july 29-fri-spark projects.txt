@@ -1,0 +1,21 @@
+/FileStore/tables/wc2018_players.csv
+
+## LEVEL-1  DATA FRAME API
+1.    Shows the names and height by adding 1 to the height column.
+2.    shows the player name and simultaneously checks whether or not they have height >170
+3.    Show FIFA Popular Name and 0 or 1 depending on Height>170
+4.    name of  shortest player 
+5.    who is tallest of all. First we find the value of maximum height and then get the details of that player
+6.    average height of the players in Argentina team.
+
+## LEVEL -2 SPARK SQL
+
+Find the list of  oldest released movies.
+How many movies are released each year?
+How many number of movies are there for each rating?
+How many users have rated each movie?
+What is the total rating for each movie?
+What is the average rating for each movie?
+
+/FileStore/tables/movies.csv
+/FileStore/tables/ratings-1.csv

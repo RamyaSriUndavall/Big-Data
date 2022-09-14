@@ -1,0 +1,25 @@
+create table insurance_data1(age int,gender string,bmi float,children int,smoker string,region string,charges float) ROW FORMAT DELIMITED FIELDS TERMINATED BY "," LINES TERMINATED BY "\n" STORED AS TEXTFILE;
+
+show databases;
+use default;
+show tables;
+describe name_of_your_hive_table;
+select * from name_of_your_hive_table;
+
+/home/hadoop/Ramya
+
+10.3.117.56
+hadoop
+Password@123
+
+VDI-load data local inpath '/home/hadoop/Ramya/insurance.csv' into table insurance_data_r;
+LOCAL- load data local inpath '/root/insurance.csv' into table insurancedata;
+
+select smoker, avg(age) as avg_age, max(age) as max_age, min(age) as min_age, avg(bmi) as avg_bmi, max(bmi) as max_bmi, min(bmi) as min_bmi, avg(charges) as avg_charges, min(charges) as min_charges,max(charges) as max_charges from insurancedata group by smoker;
+
+
+GOFILE FOR HIVE AND HADOOP NOTES-https://gofile.io/d/TrVwbY
+
+cat text.sql - .SQL EXTENSION IS A NOTEPAD/TEXT FILE WITH .SQL EXTENSION AND IS USED TO RUN ALL THE SQL COMMANDS IN THAT FILE AT ONCE.
+
+hive -f /root/text.sql
